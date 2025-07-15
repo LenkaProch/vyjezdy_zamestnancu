@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Hodnocení žádosti o výjezd</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 2em; }
+    h1 { text-align: center; }
+    label { display: block; margin-top: 1em; font-weight: bold; }
+    .result { font-size: 1.2em; margin-top: 2em; background: #f0f0f0; padding: 1em; }
+    button { margin-top: 1.5em; padding: 0.5em 1em; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <h1>Formulář bodového hodnocení</h1>
+  <form id="scoreForm">
+    <label>1. Odborný přínos výjezdu:
+      <select name="odborny">
+        <option value="20">Výjezd souvisí s grantovým projektem (20)</option>
+        <option value="15">Navazuje na odbornou/výzkumnou činnost (15)</option>
+        <option value="8">Obecný profesní rozvoj (8)</option>
+        <option value="3">Pasivní přínos (3)</option>
+      </select>
+    </label>
+
+    <label>2. Role na akci nebo instituci:
+      <select name="aktivita">
+        <option value="25">Keynote, moderace, networking (25)</option>
+        <option value="15">Prezentace článku, přednáška (15)</option>
+        <option value="10">Poster (10)</option>
+        <option value="0">Bez aktivní účasti (0)</option>
+      </select>
+    </label>
+
+    <label>3. Očekávané výstupy (vyber více možností):<br>
+      <input type="checkbox" name="vystup" value="20"> Grant se zahraničním partnerem (20)<br>
+      <input type="checkbox" name="vystup" value="10"> Mezinárodní spolupráce / MoU (10)<br>
+      <input type="checkbox" name="vystup" value="10"> Článek ve WoS (10)<br>
+      <input type="checkbox" name="vystup" value="5"> Scopus, učební materiály, grant bez partnera (5)<br>
+      <input type="checkbox" name="vystup" value="1"> Odborný článek (neimpakt.), sborník (1)<br>
+    </label>
+
+    <label>4. Frekvence výjezdů v posledních 2 letech:
+      <select name="frekvence">
+        <option value="15">Žádný výjezd (15)</option>
+        <option value="10">1–2 výjezdy (10)</option>
+        <option value="5">3 výjezdy (5)</option>
+        <option value="0">4 a více výjezdů (0)</option>
+      </select>
+    </label>
+
+    <label>5. Prestiž akce/instituce:
+      <select name="prestiž">
+        <option value="10">Prestižní mezinárodní instituce (10)</option>
+        <option value="5">Renomovaná akce nebo konference (5)</option>
+        <option value="0">Regionální nebo méně významná akce (0)</option>
+      </select>
+    </label>
+
+    <button type="button" onclick="calculateScore()">Spočítat body</button>
+  </form>
+
+  <div id="result" class="result" style="display:none"></div>
+
+  <script>
+    function calculateScore() {
+      const form = document.forms.scoreForm;
+      let total = 0;
+
+      total += parseInt(form.odborny.value);
+      total += parseInt(form.aktivita.value);
+      total += parseInt(form.frekvence.value);
+      total += parseInt(form.prestiž.value);
+
+      let vystupy = form.querySelectorAll('input[name="vystup"]:checked');
+      let vystupScore = 0;
+      vystupy.forEach(v => vystupScore += parseInt(v.value));
+      vystupScore = Math.min(vystupScore, 30); // max 30 bodů
+      total += vystupScore;
+
+      const resultBox = document.getElementById("result");
+      resultBox.style.display = "block";
+      resultBox.innerHTML = `<strong>Celkové skóre:</strong> ${total} bodů<br>` +
+        (total >= 50 ? "✅ Žádost může být zařazena do výběrového řízení." : "❌ Žádost nesplňuje minimální hranici pro výběrové řízení.");
+    }
+  </script>
+</body>
+</html>
