@@ -4,18 +4,62 @@
   <meta charset="UTF-8">
   <title>Hodnocení žádosti o výjezd</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 2em; }
-    h1 { text-align: center; }
-    label { display: block; margin-top: 1em; font-weight: bold; }
-    .result { font-size: 1.2em; margin-top: 2em; background: #f0f0f0; padding: 1em; }
-    button { margin-top: 1.5em; padding: 0.5em 1em; font-size: 1em; }
-  </style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding: 2em;
+    background-color: #ffffff;
+    color: #333;
+  }
+
+  header {
+    border-bottom: 3px solid #005EB8;
+    padding-bottom: 1em;
+    margin-bottom: 2em;
+  }
+
+  label {
+    display: block;
+    margin-top: 1.5em;
+    font-weight: 600;
+    color: #005EB8;
+  }
+
+  select, input[type=checkbox] {
+    margin-top: 0.5em;
+  }
+
+  .result {
+    font-size: 1.2em;
+    margin-top: 2em;
+    background: #E6F2FA;
+    border-left: 5px solid #005EB8;
+    padding: 1em;
+  }
+
+  button {
+    margin-top: 2em;
+    padding: 0.6em 1.5em;
+    font-size: 1em;
+    background-color: #005EB8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #004a94;
+  }
+</style>
+
 </head>
 <body>
  <header style="display:flex; align-items:center; margin-bottom:2em;">
   <img src="logo_pef.png" alt="Logo PEF MENDELU" style="height:60px; margin-right:1em;">
   <h1 style="font-size:2.5rem; color:#005EB8; font-family:'Segoe UI', Arial, sans-serif; margin:0;">
-    Hodnocení žádosti o výjezd – PEF MENDELU
+    Formulář žádosti o výjezd
   </h1>
 </header>
 
