@@ -229,8 +229,12 @@
 
     // Vygenerování PDF
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    doc.text(output, 15, 20);
+doc.setFontSize(12);
+
+// Rozděl text podle šířky (max 180 mm) a vytiskni
+const lines = doc.splitTextToSize(output, 180);
+doc.text(lines, 15, 20);
+
     doc.save("hodnoceni-vyjezdu.pdf");
   }
 </script>
