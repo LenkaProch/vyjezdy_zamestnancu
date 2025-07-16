@@ -201,11 +201,8 @@
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    let output = "";
-
     const form = document.forms.scoreForm;
 
-    // Získání vybraných odpovědí
     const getCheckedValue = (name) =>
       form.querySelector(`input[name="${name}"]:checked`)?.nextSibling.textContent.trim() || "-";
 
@@ -214,30 +211,43 @@
       .join("\n• ");
 
     const textPole = form.popis_vystupu.value.trim();
-
     const resultText = document.getElementById("result").innerText;
 
-    // Text do PDF
-    output += "🎓 Hodnocení žádosti o výjezd – PEF MENDELU\n\n";
-    output += `1. Odborný přínos výjezdu:\n• ${getCheckedValue("odborny")}\n\n`;
-    output += `2. Role na zahraniční akci nebo instituci:\n• ${getCheckedValue("aktivita")}\n\n`;
-    output += `3. Očekávané výstupy výjezdu/přínos pro ústav:\n• ${vystupy || "–"}\n\n`;
-    output += `Textový popis přínosu a harmonogram:\n${textPole || "–"}\n\n`;
-    output += `4. Počet výjezdů v posledních 2 letech:\n• ${getCheckedValue("frekvence")}\n\n`;
-    output += `5. Prestiž akce, instituce nebo vazba na internacionalizaci:\n• ${getCheckedValue("prestiž")}\n\n`;
-    output += `📊 ${resultText}`;
+    // Vlastní text rozdělený do jednotlivých řádků
+    const outputLines = [
+      "🎓 Hodnocení žádosti o výjezd – PEF MENDELU",
+      "",
+      "1. Odborný přínos výjezdu:",
+      `• ${getCheckedValue("odborny")}`,
+      "",
+      "2. Role na zahraniční akci nebo instituci:",
+      `• ${getCheckedValue("aktivita")}`,
+      "",
+      "3. Očekávané výstupy výjezdu/přínos pro ústav:",
+      vystupy ? `• ${vystupy}` : "• –",
+      "",
+      "Textový popis přínosu a harmonogram:",
+      textPole || "–",
+      "",
+      "4. Počet výjezdů v posledních 2 letech:",
+      `• ${getCheckedValue("frekvence")}`,
+      "",
+      "5. Prestiž akce, instituce nebo vazba na internacionalizaci:",
+      `• ${getCheckedValue("prestiž")}`,
+      "",
+      "📊 Výsledek hodnocení:",
+      resultText
+    ];
 
-    // Vygenerování PDF
-    doc.setFont("helvetica", "normal");
-doc.setFontSize(12);
-
-// Rozděl text podle šířky (max 180 mm) a vytiskni
-const lines = doc.splitTextToSize(output, 180);
-doc.text(lines, 15, 20);
-
+    // Vykreslení
+    doc.setFont("times", "normal"); // podporuje češtinu
+    doc.setFontSize(12);
+    doc.setLineHeightFactor(1.4);
+    doc.text(outputLines, 15, 20);
     doc.save("hodnoceni-vyjezdu.pdf");
   }
 </script>
+
 
 
 </body>
