@@ -141,6 +141,8 @@
   </form>
 
   <div id="result" class="result" style="display:none"></div>
+<button id="downloadPdf" style="display:none; margin-top: 1em;" onclick="generatePDF()">Stáhnout jako PDF</button>
+
 
  <script>
   function calculateScore() {
@@ -189,9 +191,49 @@
       (total >= 50
         ? "✅ Žádost může být zařazena do výběrového řízení."
         : "❌ Žádost nesplňuje minimální hranici pro výběrové řízení.");
+    document.getElementById("downloadPdf").style.display = "inline-block";
+
   }
 </script>
 
+<script>
+  async function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    let output = "";
+
+    const form = document.forms.scoreForm;
+
+    // Získání vybraných odpovědí
+    const getCheckedValue = (name) =>
+      form.querySelector(`input[name="${name}"]:checked`)?.nextSibling.textContent.trim() || "-";
+
+    const vystupy = Array.from(form.querySelectorAll('input[name="vystup"]:checked'))
+      .map(cb => cb.nextSibling.textContent.trim())
+      .join("\n• ");
+
+    const textPole = form.popis_vystupu.value.trim();
+
+    const resultText = document.getElementById("result").innerText;
+
+    // Text do PDF
+    output += "🎓 Hodnocení žádosti o výjezd – PEF MENDELU\n\n";
+    output += `1. Odborný přínos výjezdu:\n• ${getCheckedValue("odborny")}\n\n`;
+    output += `2. Role na akci/instituci:\n• ${getCheckedValue("aktivita")}\n\n`;
+    output += `3. Očekávané výstupy:\n• ${vystupy || "–"}\n\n`;
+    output += `Textový popis přínosu a harmonogram:\n${textPole || "–"}\n\n`;
+    output += `4. Frekvence výjezdů:\n• ${getCheckedValue("frekvence")}\n\n`;
+    output += `5. Prestiž akce/instituce:\n• ${getCheckedValue("prestiž")}\n\n`;
+    output += `📊 ${resultText}`;
+
+    // Vygenerování PDF
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text(output, 15, 20);
+    doc.save("hodnoceni-vyjezdu.pdf");
+  }
+</script>
 
 
 </body>
