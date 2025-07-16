@@ -220,11 +220,11 @@
     // Text do PDF
     output += "🎓 Hodnocení žádosti o výjezd – PEF MENDELU\n\n";
     output += `1. Odborný přínos výjezdu:\n• ${getCheckedValue("odborny")}\n\n`;
-    output += `2. Role na akci/instituci:\n• ${getCheckedValue("aktivita")}\n\n`;
-    output += `3. Očekávané výstupy:\n• ${vystupy || "–"}\n\n`;
+    output += `2. Role na zahraniční akci nebo instituci:\n• ${getCheckedValue("aktivita")}\n\n`;
+    output += `3. Očekávané výstupy výjezdu/přínos pro ústav:\n• ${vystupy || "–"}\n\n`;
     output += `Textový popis přínosu a harmonogram:\n${textPole || "–"}\n\n`;
-    output += `4. Frekvence výjezdů:\n• ${getCheckedValue("frekvence")}\n\n`;
-    output += `5. Prestiž akce/instituce:\n• ${getCheckedValue("prestiž")}\n\n`;
+    output += `4. Počet výjezdů v posledních 2 letech:\n• ${getCheckedValue("frekvence")}\n\n`;
+    output += `5. Prestiž akce, instituce nebo vazba na internacionalizaci:\n• ${getCheckedValue("prestiž")}\n\n`;
     output += `📊 ${resultText}`;
 
     // Vygenerování PDF
