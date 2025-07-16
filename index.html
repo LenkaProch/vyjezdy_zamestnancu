@@ -82,7 +82,7 @@
     <p style="margin: 0.2em 0 0.8em 2.5em; font-size: 0.75em; color: #555;">
   Pouze jedna odpověď.
 </p>
-<div style="margin-left: 2.5em; color: #000000; font-size: 0.8em; line-height: 1.8;">
+<div style="margin-left: 2.5em; color: #000000; font-size: 0.8em; line-height: 2;">
   <input type="radio" name="aktivita" value="25" required> Keynote, moderace sekce, vystoupení na plenárním zasedání, networking na zahraniční instituci, prohlubování vztahů.<br>
   <input type="radio" name="aktivita" value="15"> Prezentace článku, přednáška.<br>
   <input type="radio" name="aktivita" value="10"> Prezentace posteru<br>
@@ -95,12 +95,17 @@
     <p style="margin: 0.2em 0 0.8em 2.5em; font-size: 0.75em; color: #555;">
   Neomezený počet odpovědí.
 </p>
-<div style="margin-left: 2.5em; color: #000000; font-size: 0.8em; line-height: 1.8;">
+<div style="margin-left: 2.5em; color: #000000; font-size: 0.8em; line-height: 2;">
   <input type="checkbox" name="vystup" value="20"> Návrh grantového projektu se zahraničním partnerem.<br>
   <input type="checkbox" name="vystup" value="10"> Memorandum of Understanding/mezinárodní spolupráce.<br>
   <input type="checkbox" name="vystup" value="10"> Článek ve WoS.<br>
   <input type="checkbox" name="vystup" value="5"> Článek ve Scopus, učební materiály, návrh grantu bez partnera.<br>
   <input type="checkbox" name="vystup" value="1"> Odborný článek (neimpakt.), sborník.<br>
+  <label for="popis_vystupu" style="color: #005EB8; font-weight: 600; display:block; margin-top: 1.5em;">
+  Specifikujte přínos, časový horizont výstupu a aktuální fázi:
+</label>
+<textarea name="popis_vystupu" rows="5" style="width: 95%; margin-left: 2.5em; font-size: 0.9em;" placeholder="Např. návrh projektu bude odevzdán do 12 měsíců, článek připraven k publikaci v Q3, MoU podepsáno během výjezdu..."></textarea>
+
 </div>
 
     </label>
@@ -109,7 +114,7 @@
     <p style="margin: 0.2em 0 0.8em 2.5em; font-size: 0.75em; color: #555;">
   Pouze jedna odpověď.
 </p>
-<div style="margin-left: 2.5em; color: #000000; font-size: 0.8em; line-height: 1.8;">
+<div style="margin-left: 2.5em; color: #000000; font-size: 0.8em; line-height: 2;">
   <input type="radio" name="frekvence" value="15" required> Žádný výjezd<br>
   <input type="radio" name="frekvence" value="10"> 1–2 výjezdy<br>
   <input type="radio" name="frekvence" value="5"> 3 výjezdy<br>
@@ -122,7 +127,7 @@
     <p style="margin: 0.2em 0 0.8em 2.5em; font-size: 0.75em; color: #555;">
   Pouze jedna odpověď.
 </p>
-<div style="margin-left: 2.5em; color: #000000; font-size: 0.8em; line-height: 1.8;">
+<div style="margin-left: 2.5em; color: #000000; font-size: 0.8em; line-height: 2;">
   <input type="radio" name="prestiž" value="10" required> Prestižní mezinárodní instituce/partnerství (strategický partner).<br>
   <input type="radio" name="prestiž" value="5"> Renomovaná akce nebo konference.<br>
   <input type="radio" name="prestiž" value="0"> Regionální nebo méně významná akce.<br>
