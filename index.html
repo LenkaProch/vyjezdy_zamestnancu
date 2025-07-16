@@ -213,40 +213,34 @@
     const textPole = form.popis_vystupu.value.trim();
     const resultText = document.getElementById("result").innerText;
 
-    // Vlastní text rozdělený do jednotlivých řádků
-    const outputLines = [
-      "🎓 Hodnocení žádosti o výjezd – PEF MENDELU",
-      "",
-      "1. Odborný přínos výjezdu:",
-      `• ${getCheckedValue("odborny")}`,
-      "",
-      "2. Role na zahraniční akci nebo instituci:",
-      `• ${getCheckedValue("aktivita")}`,
-      "",
-      "3. Očekávané výstupy výjezdu/přínos pro ústav:",
-      vystupy ? `• ${vystupy}` : "• –",
-      "",
-      "Textový popis přínosu a harmonogram:",
-      textPole || "–",
-      "",
-      "4. Počet výjezdů v posledních 2 letech:",
-      `• ${getCheckedValue("frekvence")}`,
-      "",
-      "5. Prestiž akce, instituce nebo vazba na internacionalizaci:",
-      `• ${getCheckedValue("prestiž")}`,
-      "",
-      "📊 Výsledek hodnocení:",
-      resultText
-    ];
-
-    // Vykreslení
-    doc.setFont("times", "normal"); // podporuje češtinu
+    // Použijeme základní font Helvetica (lépe funguje s češtinou ve jsPDF)
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
     doc.setLineHeightFactor(1.4);
-    doc.text(outputLines, 15, 20);
+
+    const maxWidth = 180;
+    let y = 20;
+
+    function addTextBlock(label, content) {
+      const lines = doc.splitTextToSize(`${label}\n${content}`, maxWidth);
+      doc.text(lines, 15, y);
+      y += lines.length * 7; // řádkování
+    }
+
+    // Obsah PDF
+    addTextBlock("🎓 Hodnocení žádosti o výjezd – PEF MENDELU", "");
+    addTextBlock("1. Odborný přínos výjezdu:", `• ${getCheckedValue("odborny")}`);
+    addTextBlock("2. Role na zahraniční akci nebo instituci:", `• ${getCheckedValue("aktivita")}`);
+    addTextBlock("3. Očekávané výstupy výjezdu/přínos pro ústav:", vystupy ? `• ${vystupy}` : "• –");
+    addTextBlock("Textový popis přínosu a harmonogram:", textPole || "–");
+    addTextBlock("4. Počet výjezdů v posledních 2 letech:", `• ${getCheckedValue("frekvence")}`);
+    addTextBlock("5. Prestiž akce, instituce nebo vazba na internacionalizaci:", `• ${getCheckedValue("prestiž")}`);
+    addTextBlock("📊 Výsledek hodnocení:", resultText);
+
     doc.save("hodnoceni-vyjezdu.pdf");
   }
 </script>
+
 
 
 
