@@ -145,21 +145,30 @@
   function calculateScore() {
     const form = document.forms.scoreForm;
 
-    // 1. Ověření checkboxů (alespoň jeden zaškrtnutý)
+    // 1. Ověření radio buttonů (každá otázka musí mít odpověď)
+    const requiredRadioGroups = ["odborny", "aktivita", "frekvence", "prestiž"];
+    for (let group of requiredRadioGroups) {
+      if (!form[group].value) {
+        alert("Vyberte prosím odpověď u všech povinných otázek.");
+        return;
+      }
+    }
+
+    // 2. Ověření checkboxů – otázka 3
     const vystupy = form.querySelectorAll('input[name="vystup"]:checked');
     if (vystupy.length === 0) {
       alert("Vyberte alespoň jednu možnost u otázky 3 (očekávané výstupy).");
       return;
     }
 
-    // 2. Ověření textového pole (musí být vyplněno)
+    // 3. Ověření textového pole
     const popis = form.popis_vystupu.value.trim();
     if (popis === "") {
       alert("Specifikujte prosím přínos a časový harmonogram výstupů (textové pole pod otázkou 3).");
       return;
     }
 
-    // 3. Výpočet bodů
+    // 4. Výpočet bodů
     let total = 0;
     total += parseInt(form.odborny.value);
     total += parseInt(form.aktivita.value);
@@ -171,7 +180,7 @@
     vystupScore = Math.min(vystupScore, 30);
     total += vystupScore;
 
-    // 4. Výstup
+    // 5. Výstup
     const resultBox = document.getElementById("result");
     resultBox.style.display = "block";
     resultBox.innerHTML = `<strong>Celkové skóre:</strong> ${total} bodů<br>` +
@@ -180,6 +189,7 @@
         : "❌ Žádost nesplňuje minimální hranici pro výběrové řízení.");
   }
 </script>
+
 
 </body>
 </html>
