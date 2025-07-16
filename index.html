@@ -142,26 +142,44 @@
   <div id="result" class="result" style="display:none"></div>
 
   <script>
-    function calculateScore() {
-      const form = document.forms.scoreForm;
-      let total = 0;
+  function calculateScore() {
+    const form = document.forms.scoreForm;
 
-      total += parseInt(form.odborny.value);
-      total += parseInt(form.aktivita.value);
-      total += parseInt(form.frekvence.value);
-      total += parseInt(form.prestiž.value);
-
-      let vystupy = form.querySelectorAll('input[name="vystup"]:checked');
-      let vystupScore = 0;
-      vystupy.forEach(v => vystupScore += parseInt(v.value));
-      vystupScore = Math.min(vystupScore, 30); // max 30 bodů
-      total += vystupScore;
-
-      const resultBox = document.getElementById("result");
-      resultBox.style.display = "block";
-      resultBox.innerHTML = `<strong>Celkové skóre:</strong> ${total} bodů<br>` +
-        (total >= 50 ? "✅ Žádost může být zařazena do výběrového řízení." : "❌ Žádost nesplňuje minimální hranici pro výběrové řízení.");
+    // 1. Ověření checkboxů (alespoň jeden zaškrtnutý)
+    const vystupy = form.querySelectorAll('input[name="vystup"]:checked');
+    if (vystupy.length === 0) {
+      alert("Vyberte alespoň jednu možnost u otázky 3 (očekávané výstupy).");
+      return;
     }
-  </script>
+
+    // 2. Ověření textového pole (musí být vyplněno)
+    const popis = form.popis_vystupu.value.trim();
+    if (popis === "") {
+      alert("Specifikujte prosím přínos a časový harmonogram výstupů (textové pole pod otázkou 3).");
+      return;
+    }
+
+    // 3. Výpočet bodů
+    let total = 0;
+    total += parseInt(form.odborny.value);
+    total += parseInt(form.aktivita.value);
+    total += parseInt(form.frekvence.value);
+    total += parseInt(form.prestiž.value);
+
+    let vystupScore = 0;
+    vystupy.forEach(v => vystupScore += parseInt(v.value));
+    vystupScore = Math.min(vystupScore, 30);
+    total += vystupScore;
+
+    // 4. Výstup
+    const resultBox = document.getElementById("result");
+    resultBox.style.display = "block";
+    resultBox.innerHTML = `<strong>Celkové skóre:</strong> ${total} bodů<br>` +
+      (total >= 50
+        ? "✅ Žádost může být zařazena do výběrového řízení."
+        : "❌ Žádost nesplňuje minimální hranici pro výběrové řízení.");
+  }
+</script>
+
 </body>
 </html>
