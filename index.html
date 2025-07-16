@@ -141,39 +141,40 @@
 
   <div id="result" class="result" style="display:none"></div>
 
-  <script>
+ <script>
   function calculateScore() {
     const form = document.forms.scoreForm;
 
-    // 1. Ověření radio buttonů (každá otázka musí mít odpověď)
-    const requiredRadioGroups = ["odborny", "aktivita", "frekvence", "prestiž"];
-    for (let group of requiredRadioGroups) {
-      if (!form[group].value) {
-        alert("Vyberte prosím odpověď u všech povinných otázek.");
+    // 1. Kontrola, že každá skupina radio buttonů má vybranou možnost
+    const requiredRadioNames = ["odborny", "aktivita", "frekvence", "prestiž"];
+    for (let name of requiredRadioNames) {
+      const selected = form.querySelector(`input[name="${name}"]:checked`);
+      if (!selected) {
+        alert("Vyplňte prosím všechny povinné otázky (1, 2, 4 a 5).");
         return;
       }
     }
 
-    // 2. Ověření checkboxů – otázka 3
+    // 2. Kontrola, že je zaškrtnuta alespoň jedna možnost u checkboxů (otázka 3)
     const vystupy = form.querySelectorAll('input[name="vystup"]:checked');
     if (vystupy.length === 0) {
       alert("Vyberte alespoň jednu možnost u otázky 3 (očekávané výstupy).");
       return;
     }
 
-    // 3. Ověření textového pole
+    // 3. Kontrola textového pole – nesmí být prázdné
     const popis = form.popis_vystupu.value.trim();
     if (popis === "") {
-      alert("Specifikujte prosím přínos a časový harmonogram výstupů (textové pole pod otázkou 3).");
+      alert("Specifikujte prosím přínos a časový harmonogram výstupů.");
       return;
     }
 
     // 4. Výpočet bodů
     let total = 0;
-    total += parseInt(form.odborny.value);
-    total += parseInt(form.aktivita.value);
-    total += parseInt(form.frekvence.value);
-    total += parseInt(form.prestiž.value);
+    total += parseInt(form.querySelector('input[name="odborny"]:checked').value);
+    total += parseInt(form.querySelector('input[name="aktivita"]:checked').value);
+    total += parseInt(form.querySelector('input[name="frekvence"]:checked').value);
+    total += parseInt(form.querySelector('input[name="prestiž"]:checked').value);
 
     let vystupScore = 0;
     vystupy.forEach(v => vystupScore += parseInt(v.value));
@@ -189,6 +190,7 @@
         : "❌ Žádost nesplňuje minimální hranici pro výběrové řízení.");
   }
 </script>
+
 
 
 </body>
