@@ -258,10 +258,17 @@
     function addTextBlock(label, content) {
       const lines = doc.splitTextToSize(`${label}\n${content}`, maxWidth);
       doc.text(lines, 15, y);
-      y += lines.length * 7;
+      y += lines.length * 9;
     }
 
-    addTextBlock("🎓 Hodnocení žádosti o výjezd – Ústav marketingu a obchodu", "");
+    doc.setFont("Roboto", "bold");
+doc.setFontSize(14);
+doc.text("Hodnocení žádosti o výjezd – Ústav marketingu a obchodu", doc.internal.pageSize.getWidth() / 2, y, { align: "center" });
+y += 15;
+doc.setFont("Roboto", "normal");
+doc.setFontSize(12);
+
+    
     addTextBlock("1. Odborný přínos výjezdu:", `• ${getCheckedValue("odborny")}`);
     addTextBlock("2. Role na zahraniční akci nebo instituci:", `• ${getCheckedValue("aktivita")}`);
     addTextBlock("3. Očekávané výstupy výjezdu/přínos pro ústav:", vystupy ? `• ${vystupy}` : "• –");
