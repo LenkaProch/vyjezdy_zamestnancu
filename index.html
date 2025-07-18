@@ -11,19 +11,22 @@
 <script>
   window.jsPDF = window.jspdf.jsPDF;
 
-  fetch('Roboto-Regular.ttf')
+  window.robotoReady = false;
+
+  fetch("Roboto-Regular.ttf")
     .then(response => response.arrayBuffer())
     .then(buffer => {
       const base64String = btoa(
         new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
       );
 
-      const doc = new jsPDF();
-      doc.addFileToVFS("Roboto-Regular.ttf", base64String);
-      doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
+      const tempDoc = new jsPDF();
+      tempDoc.addFileToVFS("Roboto-Regular.ttf", base64String);
+      tempDoc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
       window.robotoReady = true;
     });
 </script>
+
 
   
   <style>
@@ -220,18 +223,18 @@
 </script>
 
 <script>
- 
-
   async function generatePDF() {
     const { jsPDF } = window.jspdf;
 
- if (!window.robotoReady) {
-  alert("Font Roboto ještě není připraven. Zkuste PDF znovu za pár vteřin.");
-  return;
-}
+    if (!window.robotoReady) {
+      alert("Font Roboto ještě není načten. Zkuste to za pár vteřin.");
+      return;
+    }
 
-    
     const doc = new jsPDF();
+    doc.setFont("Roboto", "normal");
+    doc.setFontSize(12);
+    doc.setLineHeightFactor(1.4);
 
     const form = document.forms.scoreForm;
 
@@ -245,21 +248,15 @@
     const textPole = form.popis_vystupu.value.trim();
     const resultText = document.getElementById("result").innerText;
 
-    // Použijeme  font Roboto (podporuje češtinu, jestli to nepůjde, už mě klepne)
-    doc.setFont("Roboto", "normal");
-    doc.setFontSize(12);
-    doc.setLineHeightFactor(1.4);
-
     const maxWidth = 180;
     let y = 20;
 
     function addTextBlock(label, content) {
       const lines = doc.splitTextToSize(`${label}\n${content}`, maxWidth);
       doc.text(lines, 15, y);
-      y += lines.length * 7; // řádkování
+      y += lines.length * 7;
     }
 
-    // Obsah PDF
     addTextBlock("🎓 Hodnocení žádosti o výjezd – PEF MENDELU", "");
     addTextBlock("1. Odborný přínos výjezdu:", `• ${getCheckedValue("odborny")}`);
     addTextBlock("2. Role na zahraniční akci nebo instituci:", `• ${getCheckedValue("aktivita")}`);
@@ -272,6 +269,7 @@
     doc.save("hodnoceni-vyjezdu.pdf");
   }
 </script>
+
 
 
 
