@@ -263,7 +263,7 @@
 
     doc.setFont("Roboto", "bold");
 doc.setFontSize(14);
-doc.text("Hodnocení žádosti o výjezd – Ústav marketingu a obchodu", doc.internal.pageSize.getWidth() / 2, y, { align: "center" });
+doc.text("Hodnocení žádosti o výjezd", doc.internal.pageSize.getWidth() / 2, y, { align: "center" });
 y += 15;
 doc.setFont("Roboto", "normal");
 doc.setFontSize(12);
@@ -275,7 +275,10 @@ doc.setFontSize(12);
     addTextBlock("Textový popis přínosu a harmonogram:", textPole || "–");
     addTextBlock("4. Počet výjezdů v posledních 2 letech:", `• ${getCheckedValue("frekvence")}`);
     addTextBlock("5. Prestiž akce, instituce nebo vazba na internacionalizaci:", `• ${getCheckedValue("prestiž")}`);
-    addTextBlock("📊 Výsledek hodnocení:", resultText);
+    doc.setFont("Roboto", "bold");
+addTextBlock("📊 Výsledek hodnocení:", resultText);
+doc.setFont("Roboto", "normal");
+
 
     doc.save("hodnoceni-vyjezdu.pdf");
   }
