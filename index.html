@@ -220,8 +220,17 @@
 </script>
 
 <script>
+ 
+
   async function generatePDF() {
     const { jsPDF } = window.jspdf;
+
+ if (!window.robotoReady) {
+  alert("Font Roboto ještě není připraven. Zkuste PDF znovu za pár vteřin.");
+  return;
+}
+
+    
     const doc = new jsPDF();
 
     const form = document.forms.scoreForm;
@@ -236,8 +245,8 @@
     const textPole = form.popis_vystupu.value.trim();
     const resultText = document.getElementById("result").innerText;
 
-    // Použijeme základní font Helvetica (lépe funguje s češtinou ve jsPDF)
-    doc.setFont("helvetica", "normal");
+    // Použijeme  font Roboto (podporuje češtinu, jestli to nepůjde, už mě klepne)
+    doc.setFont("Roboto", "normal");
     doc.setFontSize(12);
     doc.setLineHeightFactor(1.4);
 
