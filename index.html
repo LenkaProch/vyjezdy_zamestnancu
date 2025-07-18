@@ -238,7 +238,7 @@
     doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
     doc.setFont("Roboto", "normal");
     doc.setFontSize(12);
-    doc.setLineHeightFactor(1.4);
+    doc.setLineHeightFactor(2.2);
 
     const form = document.forms.scoreForm;
 
@@ -261,7 +261,7 @@
       y += lines.length * 7;
     }
 
-    addTextBlock("🎓 Hodnocení žádosti o výjezd – PEF MENDELU", "");
+    addTextBlock("🎓 Hodnocení žádosti o výjezd – Ústav marketingu a obchodu", "");
     addTextBlock("1. Odborný přínos výjezdu:", `• ${getCheckedValue("odborny")}`);
     addTextBlock("2. Role na zahraniční akci nebo instituci:", `• ${getCheckedValue("aktivita")}`);
     addTextBlock("3. Očekávané výstupy výjezdu/přínos pro ústav:", vystupy ? `• ${vystupy}` : "• –");
