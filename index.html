@@ -82,6 +82,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
+ 
+
 <body>
  <header style="display:flex; align-items:center; margin-bottom:2em;">
   <img src="logo_pef.png" alt="Logo PEF MENDELU" style="height:60px; margin-right:1em;">
@@ -232,6 +234,8 @@
     }
 
     const doc = new jsPDF();
+    doc.addFileToVFS("Roboto-Regular.ttf", window.robotoFont);
+    doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
     doc.setFont("Roboto", "normal");
     doc.setFontSize(12);
     doc.setLineHeightFactor(1.4);
@@ -271,7 +275,23 @@
 </script>
 
 
+<!-- TADY SE NAČTE FONT -->
+ <script>
+  window.jsPDF = window.jspdf.jsPDF;
+  window.robotoReady = false;
+  window.robotoFont = null;
 
+  fetch("Roboto-Regular.ttf")
+    .then(response => response.arrayBuffer())
+    .then(buffer => {
+      const base64String = btoa(
+        new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+      );
+
+      window.robotoFont = base64String;
+      window.robotoReady = true;
+    });
+</script>
 
 
 </body>
