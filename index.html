@@ -228,8 +228,8 @@ doc.addFileToVFS("Roboto-Regular.ttf", window.robotoFont);
 doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
 
 // ✅ REGISTRACE ROBOTO BOLD – to jsi dřív neměla
-doc.addFileToVFS("Roboto-Bold.ttf", window.robotoBoldFont);
-doc.addFont("Roboto-Bold.ttf", "Roboto", "bold");
+// doc.addFileToVFS("Roboto-Bold.ttf", window.robotoBoldFont);
+// doc.addFont("Roboto-Bold.ttf", "Roboto", "bold");
 
 // Výchozí nastavení
 doc.setFont("Roboto", "normal");
@@ -298,14 +298,17 @@ doc.setFont("Roboto", "normal");
       checkReady();
     });
 
+ 
   // Načti BOLD
-  fetch("Roboto-Bold.ttf")
-    .then(res => res.arrayBuffer())
-    .then(buffer => {
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-      window.robotoBoldFont = b64;
-      checkReady();
-    });
+ // fetch("Roboto-Bold.ttf")
+   // .then(res => res.arrayBuffer())
+   // .then(buffer => {
+     // const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+     // window.robotoBoldFont = b64;
+     // checkReady();
+   // });
+  
+    
 
   function checkReady() {
     if (window.robotoFont && window.robotoBoldFont) {
