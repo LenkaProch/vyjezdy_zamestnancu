@@ -179,15 +179,7 @@
  <script>
   function calculateScore() {
     const form = document.forms.scoreForm;
-const jmeno = form.jmeno.value.trim();
 
-  if (!jmeno) {
-    document.getElementById("result").innerText = ""; // smaž výsledek
-    return; // přeruš výpočet
-  }
-
-  // ... dál pokračuješ počítáním
-}
     // 1. Kontrola, že každá skupina radio buttonů má vybranou možnost
     const requiredRadioNames = ["odborny", "aktivita", "frekvence", "prestiž"];
     for (let name of requiredRadioNames) {
@@ -247,11 +239,7 @@ const jmeno = form.jmeno.value.trim();
 
     const doc = new jsPDF();
     doc.addFileToVFS("Roboto-Regular.ttf", window.robotoFont);
-doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
-
-doc.addFileToVFS("Roboto-Bold.ttf", window.robotoBoldFont);
-doc.addFont("Roboto-Bold.ttf", "Roboto", "bold");
-
+    doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
     doc.setFont("Roboto", "normal");
     doc.setFontSize(12);
     doc.setLineHeightFactor(1.8);
@@ -292,7 +280,7 @@ doc.setFontSize(12);
     addTextBlock("4. Počet výjezdů v posledních 2 letech:", `• ${getCheckedValue("frekvence")}`);
     addTextBlock("5. Prestiž akce, instituce nebo vazba na internacionalizaci:", `• ${getCheckedValue("prestiž")}`);
     doc.setFont("Roboto", "bold");
-addTextBlock("Výsledek hodnocení:", resultText);
+addTextBlock("📊 Výsledek hodnocení:", resultText);
 doc.setFont("Roboto", "normal");
 
 
@@ -302,37 +290,22 @@ doc.setFont("Roboto", "normal");
 
 
 <!-- TADY SE NAČTE FONT -->
-<script>
+ <script>
   window.jsPDF = window.jspdf.jsPDF;
   window.robotoReady = false;
   window.robotoFont = null;
-  window.robotoBoldFont = null;
 
-  // Načti Roboto-Regular
   fetch("Roboto-Regular.ttf")
-    .then(res => res.arrayBuffer())
+    .then(response => response.arrayBuffer())
     .then(buffer => {
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-      window.robotoFont = b64;
-      checkReady();
-    });
+      const base64String = btoa(
+        new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+      );
 
-  // Načti Roboto-Bold
-  fetch("Roboto-Bold.ttf")
-    .then(res => res.arrayBuffer())
-    .then(buffer => {
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-      window.robotoBoldFont = b64;
-      checkReady();
-    });
-
-  function checkReady() {
-    if (window.robotoFont && window.robotoBoldFont) {
+      window.robotoFont = base64String;
       window.robotoReady = true;
-    }
-  }
+    });
 </script>
-
 
 
 </body>
