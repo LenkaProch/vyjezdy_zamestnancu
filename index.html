@@ -179,15 +179,7 @@
  <script>
   function calculateScore() {
     const form = document.forms.scoreForm;
-const jmeno = form.jmeno.value.trim();
 
-  if (!jmeno) {
-    document.getElementById("result").innerText = ""; // smaž výsledek
-    return; // přeruš výpočet
-  }
-
-  // ... dál pokračuješ počítáním
-}
     // 1. Kontrola, že každá skupina radio buttonů má vybranou možnost
     const requiredRadioNames = ["odborny", "aktivita", "frekvence", "prestiž"];
     for (let name of requiredRadioNames) {
@@ -288,7 +280,7 @@ doc.setFontSize(12);
     addTextBlock("4. Počet výjezdů v posledních 2 letech:", `• ${getCheckedValue("frekvence")}`);
     addTextBlock("5. Prestiž akce, instituce nebo vazba na internacionalizaci:", `• ${getCheckedValue("prestiž")}`);
     doc.setFont("Roboto", "bold");
-addTextBlock("Výsledek hodnocení:", resultText);
+addTextBlock("📊 Výsledek hodnocení:", resultText);
 doc.setFont("Roboto", "normal");
 
 
