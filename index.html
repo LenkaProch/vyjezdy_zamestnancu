@@ -93,7 +93,10 @@
 </header>
 
   <form id="scoreForm" style="padding:2em; border:1px solid #CCE0F4; border-radius:8px; background-color:#FAFCFF;">
-
+<p>
+    <label for="jmeno"><strong>Jméno a příjmení žadatele:</strong></label><br>
+    <input type="text" name="jmeno" id="jmeno" style="width: 100%;" required>
+  </p>
     <label style="color: #005EB8; font-weight: 600;">1. Odborný přínos výjezdu</label>
     <p style="margin: 0.2em 0 0.8em 2.5em; font-size: 0.75em; color: #555;">
   Pouze jedna odpověď.
@@ -242,6 +245,13 @@
 
     const form = document.forms.scoreForm;
 
+    const jmeno = form.jmeno.value.trim();
+if (!jmeno) {
+  alert("Vyplňte prosím jméno a příjmení žadatele.");
+  return;
+}
+
+
     const getCheckedValue = (name) =>
       form.querySelector(`input[name="${name}"]:checked`)?.nextSibling.textContent.trim() || "-";
 
@@ -268,7 +278,8 @@ y += 15;
 doc.setFont("Roboto", "normal");
 doc.setFontSize(12);
 
-    
+    addTextBlock("👤 Jméno a příjmení žadatele:", jmeno);
+
     addTextBlock("1. Odborný přínos výjezdu:", `• ${getCheckedValue("odborny")}`);
     addTextBlock("2. Role na zahraniční akci nebo instituci:", `• ${getCheckedValue("aktivita")}`);
     addTextBlock("3. Očekávané výstupy výjezdu/přínos pro ústav:", vystupy ? `• ${vystupy}` : "• –");
