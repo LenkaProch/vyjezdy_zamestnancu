@@ -8,8 +8,24 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+<script>
+  window.jsPDF = window.jspdf.jsPDF;
 
+  window.robotoReady = false;
 
+  fetch("Roboto-Regular.ttf")
+    .then(response => response.arrayBuffer())
+    .then(buffer => {
+      const base64String = btoa(
+        new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+      );
+
+      const tempDoc = new jsPDF();
+      tempDoc.addFileToVFS("Roboto-Regular.ttf", base64String);
+      tempDoc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
+      window.robotoReady = true;
+    });
+</script>
 
 
   
@@ -77,10 +93,6 @@
 </header>
 
   <form id="scoreForm" style="padding:2em; border:1px solid #CCE0F4; border-radius:8px; background-color:#FAFCFF;">
-<p>
-  <label for="jmeno"><strong>Jméno a příjmení žadatele:</strong></label><br>
-  <input type="text" name="jmeno" id="jmeno" style="width: 100%;" required>
-</p>
 
     <label style="color: #005EB8; font-weight: 600;">1. Odborný přínos výjezdu</label>
     <p style="margin: 0.2em 0 0.8em 2.5em; font-size: 0.75em; color: #555;">
@@ -222,20 +234,11 @@
     }
 
     const doc = new jsPDF();
-
-// ➕ REGISTRACE ROBOTO REGULAR
-doc.addFileToVFS("Roboto-Regular.ttf", window.robotoFont);
-doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
-
-// ✅ REGISTRACE ROBOTO BOLD – to jsi dřív neměla
-doc.addFileToVFS("Roboto-Bold.ttf", window.robotoBoldFont);
-doc.addFont("Roboto-Bold.ttf", "Roboto", "bold");
-
-// Výchozí nastavení
-doc.setFont("Roboto", "normal");
-doc.setFontSize(12);
-doc.setLineHeightFactor(1.8);
-
+    doc.addFileToVFS("Roboto-Regular.ttf", window.robotoFont);
+    doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
+    doc.setFont("Roboto", "normal");
+    doc.setFontSize(12);
+    doc.setLineHeightFactor(1.8);
 
     const form = document.forms.scoreForm;
 
@@ -260,7 +263,7 @@ doc.setLineHeightFactor(1.8);
 
     doc.setFont("Roboto", "bold");
 doc.setFontSize(14);
-doc.text("Hodnocení žádosti o výjezd", doc.internal.pageSize.getWidth() / 2, y, { align: "center" });
+doc.text("Hodnocení žádosti o výjezd – Ústav marketingu a obchodu", doc.internal.pageSize.getWidth() / 2, y, { align: "center" });
 y += 15;
 doc.setFont("Roboto", "normal");
 doc.setFontSize(12);
@@ -272,10 +275,7 @@ doc.setFontSize(12);
     addTextBlock("Textový popis přínosu a harmonogram:", textPole || "–");
     addTextBlock("4. Počet výjezdů v posledních 2 letech:", `• ${getCheckedValue("frekvence")}`);
     addTextBlock("5. Prestiž akce, instituce nebo vazba na internacionalizaci:", `• ${getCheckedValue("prestiž")}`);
-    doc.setFont("Roboto", "bold");
-addTextBlock("📊 Výsledek hodnocení:", resultText);
-doc.setFont("Roboto", "normal");
-
+    addTextBlock("📊 Výsledek hodnocení:", resultText);
 
     doc.save("hodnoceni-vyjezdu.pdf");
   }
@@ -283,40 +283,22 @@ doc.setFont("Roboto", "normal");
 
 
 <!-- TADY SE NAČTE FONT -->
-<script>
+ <script>
   window.jsPDF = window.jspdf.jsPDF;
   window.robotoReady = false;
   window.robotoFont = null;
-  window.robotoBoldFont = null;
 
-  // Načti REGULAR
   fetch("Roboto-Regular.ttf")
-    .then(res => res.arrayBuffer())
+    .then(response => response.arrayBuffer())
     .then(buffer => {
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-      window.robotoFont = b64;
-      checkReady();
-    });
+      const base64String = btoa(
+        new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+      );
 
- 
-  // Načti BOLD
- fetch("Roboto-Bold.ttf")
-   .then(res => res.arrayBuffer())
-   .then(buffer => {
-     const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-     window.robotoBoldFont = b64;
-     checkReady();
-   });
-  
-    
-
-  function checkReady() {
-    if (window.robotoFont && window.robotoBoldFont) {
+      window.robotoFont = base64String;
       window.robotoReady = true;
-    }
-  }
+    });
 </script>
-
 
 
 </body>
