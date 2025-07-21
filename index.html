@@ -10,22 +10,35 @@
 
 <script>
   window.jsPDF = window.jspdf.jsPDF;
-
   window.robotoReady = false;
+  window.robotoFont = null;
+  window.robotoBoldFont = null;
 
+  // Načti ROBOTO REGULAR
   fetch("Roboto-Regular.ttf")
-    .then(response => response.arrayBuffer())
+    .then(res => res.arrayBuffer())
     .then(buffer => {
-      const base64String = btoa(
-        new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
-      );
-
-      const tempDoc = new jsPDF();
-      tempDoc.addFileToVFS("Roboto-Regular.ttf", base64String);
-      tempDoc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
-      window.robotoReady = true;
+      const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+      window.robotoFont = b64;
+      checkReady();
     });
+
+  // Načti ROBOTO BOLD
+  fetch("Roboto-Bold.ttf")
+    .then(res => res.arrayBuffer())
+    .then(buffer => {
+      const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+      window.robotoBoldFont = b64;
+      checkReady();
+    });
+
+  function checkReady() {
+    if (window.robotoFont && window.robotoBoldFont) {
+      window.robotoReady = true;
+    }
+  }
 </script>
+
 
 
   
@@ -238,11 +251,20 @@
     }
 
     const doc = new jsPDF();
-    doc.addFileToVFS("Roboto-Regular.ttf", window.robotoFont);
-    doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
-    doc.setFont("Roboto", "normal");
-    doc.setFontSize(12);
-    doc.setLineHeightFactor(1.8);
+
+// ➕ REGISTRACE ROBOTO REGULAR
+doc.addFileToVFS("Roboto-Regular.ttf", window.robotoFont);
+doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
+
+// ✅ REGISTRACE ROBOTO BOLD – to jsi dřív neměla
+doc.addFileToVFS("Roboto-Bold.ttf", window.robotoBoldFont);
+doc.addFont("Roboto-Bold.ttf", "Roboto", "bold");
+
+// Výchozí nastavení
+doc.setFont("Roboto", "normal");
+doc.setFontSize(12);
+doc.setLineHeightFactor(1.8);
+
 
     const form = document.forms.scoreForm;
 
