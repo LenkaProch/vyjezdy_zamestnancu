@@ -8,36 +8,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<script>
-  window.jsPDF = window.jspdf.jsPDF;
-  window.robotoReady = false;
-  window.robotoFont = null;
-  window.robotoBoldFont = null;
 
-  // Načti ROBOTO REGULAR
-  fetch("Roboto-Regular.ttf")
-    .then(res => res.arrayBuffer())
-    .then(buffer => {
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-      window.robotoFont = b64;
-      checkReady();
-    });
-
-  // Načti ROBOTO BOLD
-  fetch("Roboto-Bold.ttf")
-    .then(res => res.arrayBuffer())
-    .then(buffer => {
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-      window.robotoBoldFont = b64;
-      checkReady();
-    });
-
-  function checkReady() {
-    if (window.robotoFont && window.robotoBoldFont) {
-      window.robotoReady = true;
-    }
-  }
-</script>
 
 
 
